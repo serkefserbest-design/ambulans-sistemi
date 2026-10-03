@@ -1,0 +1,337 @@
+import { Arac, MedikalEkipman, GunlukVardiyaKontrol, HaftalikMekanikBakim, AylikMedikalKontrol, ArizaKaydi, IstasyonNotu } from '../types';
+
+export const INITIAL_VEHICLES: Arac[] = [
+  {
+    id: 'veh-1',
+    plaka: '34 EM 112',
+    aracModeli: {
+      marka: 'Mercedes-Benz',
+      model: 'Sprinter 319 CDI Acil Yardım',
+      yil: 2023,
+    },
+    ruhsatBilgileri: {
+      sasiNo: 'WDB9066331P482910',
+      motorNo: 'OM642-8923019',
+      belgeSeriNo: 'AA 849201',
+    },
+    kaskoBitisTarihi: '2026-11-20',
+    trafikSigortasiBitisTarihi: '2026-10-05', // Yaklaşıyor (< 30 gün)
+    guncelKm: 148520,
+    durum: 'Aktif',
+    istasyon: 'Cizre 1 Nolu ASHİ',
+    ilce: 'Cizre',
+    aylikKullanimSaati: 142,
+  },
+  {
+    id: 'veh-2',
+    plaka: '73 HL 404',
+    aracModeli: {
+      marka: 'Ford',
+      model: 'Transit 350L Yüksek Tavan Ambulans',
+      yil: 2022,
+    },
+    ruhsatBilgileri: {
+      sasiNo: 'NM0XXXTTFXNT29481',
+      motorNo: 'YMR6-5910283',
+      belgeSeriNo: 'BB 391820',
+    },
+    kaskoBitisTarihi: '2026-09-28', // Kritik (< 15 gün)
+    trafikSigortasiBitisTarihi: '2026-12-15',
+    guncelKm: 192450,
+    durum: 'Görevde',
+    istasyon: 'İdil 1 Nolu ASHİ',
+    ilce: 'İdil',
+    aylikKullanimSaati: 215,
+  },
+  {
+    id: 'veh-3',
+    plaka: '73 ANK 112',
+    aracModeli: {
+      marka: 'Volkswagen',
+      model: 'Crafter 2.0 TDI Paletli Kar Ambulansı',
+      yil: 2021,
+    },
+    ruhsatBilgileri: {
+      sasiNo: 'WV1ZZZ2EZB6019284',
+      motorNo: 'DAVA-1092847',
+      belgeSeriNo: 'CC 550192',
+    },
+    kaskoBitisTarihi: '2026-08-30', // Süresi dolmuş!
+    trafikSigortasiBitisTarihi: '2026-08-30',
+    guncelKm: 115300,
+    durum: 'Bakımda',
+    istasyon: 'Merkez Kademeleri',
+    ilce: 'Merkez',
+    aylikKullanimSaati: 45,
+  },
+  {
+    id: 'veh-4',
+    plaka: '73 KS 911',
+    aracModeli: {
+      marka: 'Mercedes-Benz',
+      model: 'Sprinter 416 Obezite & Yoğun Bakım Ambulansı',
+      yil: 2024,
+    },
+    ruhsatBilgileri: {
+      sasiNo: 'WDB9076531P998201',
+      motorNo: 'OM654-7729104',
+      belgeSeriNo: 'DD 992810',
+    },
+    kaskoBitisTarihi: '2027-03-15',
+    trafikSigortasiBitisTarihi: '2027-03-15',
+    guncelKm: 42100,
+    durum: 'Aktif',
+    istasyon: 'Silopi 1 Nolu ASHİ',
+    ilce: 'Silopi',
+    aylikKullanimSaati: 98,
+  },
+  {
+    id: 'veh-5',
+    plaka: '73 YDK 99',
+    aracModeli: {
+      marka: 'Fiat',
+      model: 'Ducato 2.3 Multijet',
+      yil: 2020,
+    },
+    ruhsatBilgileri: {
+      sasiNo: 'ZFA25000002938471',
+      motorNo: 'F1AE3481D',
+      belgeSeriNo: 'YY 112233',
+    },
+    kaskoBitisTarihi: '2027-05-10',
+    trafikSigortasiBitisTarihi: '2027-05-10',
+    guncelKm: 285400,
+    durum: 'Yedek',
+    istasyon: 'İl Yedek Araç Havuzu',
+    ilce: 'Diğer',
+    aylikKullanimSaati: 12,
+  },
+];
+
+export const INITIAL_EQUIPMENT: MedikalEkipman[] = [
+  {
+    id: 'eq-1',
+    cihazAdi: 'Bifazik Defibrilatör & Monitör',
+    seriNo: 'ZOL-X-993821',
+    sonKalibrasyonTarihi: '2025-10-10',
+    gelecekKalibrasyonTarihi: '2026-10-10', // ~25 gün kaldı
+    sonKullanmaTarihi: '2028-01-01',
+    bulunduguAracPlakasi: '34 EM 112',
+    kategori: 'Yaşam Destek',
+    durum: 'Faal',
+  },
+  {
+    id: 'eq-2',
+    cihazAdi: 'Transport Ventilatör (Solunum Cihazı)',
+    seriNo: 'HAM-T1-40918',
+    sonKalibrasyonTarihi: '2025-09-01',
+    gelecekKalibrasyonTarihi: '2026-09-01', // Süresi Doldu!
+    sonKullanmaTarihi: '2029-05-01',
+    bulunduguAracPlakasi: '34 EM 112',
+    kategori: 'Solunum / Gaz',
+    durum: 'Kalibrasyon Gerekli',
+  },
+  {
+    id: 'eq-3',
+    cihazAdi: 'Ana Sedye ve Çok Noktalı Emniyet Kemeri',
+    seriNo: 'FER-ST-88219',
+    sonKalibrasyonTarihi: '2026-01-15',
+    gelecekKalibrasyonTarihi: '2027-01-15',
+    sonKullanmaTarihi: '2031-01-15',
+    bulunduguAracPlakasi: '34 EM 112',
+    kategori: 'Taşıma / Sabitleme',
+    durum: 'Faal',
+  },
+  {
+    id: 'eq-4',
+    cihazAdi: 'Sabit 10L Medikal Oksijen Tüpü (200 Bar)',
+    seriNo: 'OX-TUP-10L-552',
+    sonKalibrasyonTarihi: '2024-05-20',
+    gelecekKalibrasyonTarihi: '2027-05-20',
+    sonKullanmaTarihi: '2026-09-25', // Hidrostatik Basınç Testi SKT (< 10 gün kaldı!)
+    bulunduguAracPlakasi: '34 HL 404',
+    kategori: 'Solunum / Gaz',
+    durum: 'Faal',
+  },
+  {
+    id: 'eq-5',
+    cihazAdi: 'Acil Müdahale & İlk Yardım Çantası (Kit-A)',
+    seriNo: 'FAK-KIT-2024-09',
+    sonKalibrasyonTarihi: '2026-06-01',
+    gelecekKalibrasyonTarihi: '2026-12-01',
+    sonKullanmaTarihi: '2026-10-15', // İlaç & Enjektör SKT yaklaşan
+    bulunduguAracPlakasi: '34 HL 404',
+    kategori: 'Sarf / İlkyardım',
+    durum: 'Faal',
+  },
+  {
+    id: 'eq-6',
+    cihazAdi: 'Otomatik Eksternal Defibrilatör (OED / AED)',
+    seriNo: 'AED-PH-19284',
+    sonKalibrasyonTarihi: '2025-11-15',
+    gelecekKalibrasyonTarihi: '2026-11-15',
+    sonKullanmaTarihi: '2027-08-10',
+    bulunduguAracPlakasi: '06 ANK 112',
+    kategori: 'Yaşam Destek',
+    durum: 'Faal',
+  },
+  {
+    id: 'eq-7',
+    cihazAdi: 'Mekanik Göğüs Kompresyon Cihazı (LUCAS 3)',
+    seriNo: 'LUC-3-98201',
+    sonKalibrasyonTarihi: '2026-02-10',
+    gelecekKalibrasyonTarihi: '2027-02-10',
+    sonKullanmaTarihi: '2030-01-01',
+    bulunduguAracPlakasi: '35 KS 911',
+    kategori: 'Yaşam Destek',
+    durum: 'Faal',
+  },
+];
+
+export const INITIAL_CHECKLISTS = {
+  gunluk: [
+    {
+      id: 'chk-g-1',
+      tarih: '2026-09-15 08:00',
+      plaka: '34 EM 112',
+      yakitDurumu: 85,
+      temizlikDurumu: 'Mükemmel' as const,
+      tibbiMalzemeEksikYok: true,
+      tibbiMalzemeEksikNotu: 'Tüm ampul ve serum setleri tam.',
+      telsizCalisiyor: true,
+      tepeLambasiCalisiyor: true,
+      sirenCalisiyor: true,
+      devredenPersonel: 'ATT Burak Yılmaz',
+      devralanPersonel: 'Paramedik Selin Kaya',
+      devredenImza: 'B.Yılmaz',
+      devralanImza: 'S.Kaya',
+      notlar: 'Sabah devir teslimi eksiksiz tamamlandı.',
+    },
+    {
+      id: 'chk-g-2',
+      tarih: '2026-09-14 20:00',
+      plaka: '34 HL 404',
+      yakitDurumu: 40,
+      temizlikDurumu: 'İyi' as const,
+      tibbiMalzemeEksikYok: false,
+      tibbiMalzemeEksikNotu: '2 kutu 500ml SF serum tüketildi, depodan ikmal edilmeli.',
+      telsizCalisiyor: true,
+      tepeLambasiCalisiyor: false, // Arıza var!
+      sirenCalisiyor: true,
+      devredenPersonel: 'ATT Caner Aksoy',
+      devralanPersonel: 'Paramedik Gizem Erdem',
+      devredenImza: 'C.Aksoy',
+      devralanImza: 'G.Erdem',
+      notlar: 'Sol tepe lambası arızası bildirimi açıldı.',
+    },
+  ],
+  haftalik: [
+    {
+      id: 'chk-h-1',
+      tarih: '2026-09-12 11:30',
+      plaka: '34 EM 112',
+      motorYagiSeviyesi: 'Uygun' as const,
+      silecekSuyu: 'Tam' as const,
+      frenler: 'Sorunsuz' as const,
+      lastikBasinclariPsi: {
+        onSol: 45,
+        onSag: 45,
+        arkaSol: 48,
+        arkaSag: 48,
+      },
+      lastikDisDerinligiMm: 6.8,
+      bakimiYapanPersonel: 'Kıdemli Şoför Ahmet Demir',
+      notlar: 'Tüm kontroller tamam, lastik havaları tamamlandı.',
+    },
+  ],
+  aylik: [
+    {
+      id: 'chk-a-1',
+      tarih: '2026-09-01 14:00',
+      plaka: '34 EM 112',
+      bataryaSaglikDurumu: 'Mükemmel (%100)' as const,
+      kalibrasyonSureleriKontrolEdildi: false, // Solunum cihazı uyarısı!
+      oksijenTupuDolulukBari: 190,
+      kontrolEdenPersonel: 'Paramedik Selin Kaya',
+      notlar: 'Ventilatör kalibrasyon süresi dolmak üzere, teknik servise iletildi.',
+    },
+  ],
+};
+
+export const INITIAL_STATION_NOTES: IstasyonNotu[] = [
+  {
+    id: 'sn-1',
+    istasyonAdi: 'Cizre 1 Nolu ASHİ',
+    mesaj: 'Yedek oksijen tüpleri 2 adede düştü, acil ikmal talebi açıldı.',
+    tip: 'Eksik',
+    tarih: '28/09/2026',
+    ekleyen: 'Sistem Yöneticisi'
+  },
+  {
+    id: 'sn-2',
+    istasyonAdi: 'Cizre 1 Nolu ASHİ',
+    mesaj: 'İstasyon jeneratörü bakımı perşembe günü yapılacak.',
+    tip: 'Bilgi',
+    tarih: '28/09/2026',
+    ekleyen: 'Sistem Yöneticisi'
+  },
+  {
+    id: 'sn-3',
+    istasyonAdi: 'İdil 1 Nolu ASHİ',
+    mesaj: 'Ana kapı otomatiği arızalı, manuel açılıp kapanıyor. Dikkat edilsin.',
+    tip: 'Uyarı',
+    tarih: '27/09/2026',
+    ekleyen: 'Sistem Yöneticisi'
+  }
+];
+
+export const INITIAL_ISSUES: ArizaKaydi[] = [
+  {
+    id: 'iss-1',
+    kayitNo: '#00124',
+    ilgiliTip: 'Araç',
+    ilgiliHedef: '34 HL 404',
+    arizaTanimi: 'Sol ön tepe lambası ve yan flaşörler yanmıyor, gece sürüşünde görünürlük riski.',
+    aciliyetSeviyesi: 'Yüksek',
+    bildirenPersonel: 'Paramedik Gizem Erdem',
+    olusturulmaTarihi: '14/09/2026 20:15',
+    sonDurum: 'Tamirde',
+    cozumNotu: 'Oto elektrik servisine yönlendirildi, sigorta ve röle değişimi bekleniyor.',
+  },
+  {
+    id: 'iss-2',
+    kayitNo: '#00125',
+    ilgiliTip: 'Ekipman',
+    ilgiliHedef: 'HAM-T1-40918 (Ventilatör)',
+    arizaTanimi: 'Cihazın yıllık kalibrasyon süresi 01/09/2026 itibariyle dolmuştur. Hasta güvenliği için acil akreditasyon gerekli.',
+    aciliyetSeviyesi: 'Kritik',
+    bildirenPersonel: 'Paramedik Selin Kaya',
+    olusturulmaTarihi: '02/09/2026 09:30',
+    sonDurum: 'Arızada',
+  },
+  {
+    id: 'iss-3',
+    kayitNo: '#00122',
+    ilgiliTip: 'Araç',
+    ilgiliHedef: '06 ANK 112',
+    arizaTanimi: 'Fren balatasından sürtünme sesi geliyor ve fren hidrolik ikaz lambası yanıp sönüyor.',
+    aciliyetSeviyesi: 'Kritik',
+    bildirenPersonel: 'Şoför Murat Öztürk',
+    olusturulmaTarihi: '29/08/2026 16:45',
+    sonDurum: 'Tamirde',
+    cozumNotu: 'Yetkili servise çekildi, ön disk ve balatalar sipariş edildi.',
+  },
+  {
+    id: 'iss-4',
+    kayitNo: '#00120',
+    ilgiliTip: 'Ekipman',
+    ilgiliHedef: 'FER-ST-88219 (Ana Sedye)',
+    arizaTanimi: 'Sedye arka hidrolik yükseklik ayar mandalı sıkışıyordu.',
+    aciliyetSeviyesi: 'Orta',
+    bildirenPersonel: 'ATT Burak Yılmaz',
+    olusturulmaTarihi: '25/08/2026 10:00',
+    sonDurum: 'Çözüldü',
+    cozumNotu: 'Mekanik yağlama ve pim değişimi yapıldı. Test edildi, faal.',
+    cozulmeTarihi: '26/08/2026 14:00',
+  },
+];
